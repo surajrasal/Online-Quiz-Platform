@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Quiz App</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #74ebd5, #acb6e5);
+            text-align: center;
+        }
+        .container {
+            background: white;
+            width: 400px;
+            margin: auto;
+            margin-top: 80px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .option {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            background: #eee;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .option:hover {
+            background: #d3d3d3;
+        }
+        #nextBtn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2 id="question">Question</h2>
+
+    <button class="option" onclick="checkAnswer(this)"></button>
+    <button class="option" onclick="checkAnswer(this)"></button>
+    <button class="option" onclick="checkAnswer(this)"></button>
+    <button class="option" onclick="checkAnswer(this)"></button>
+
+    <p id="result"></p>
+    <button id="nextBtn" onclick="nextQuestion()">Next</button>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "What is HTML?",
+            options: ["Programming", "Markup Language", "Database", "OS"],
+            answer: "Markup Language"
+        },
+        {
+            question: "CSS is used for?",
+            options: ["Logic", "Design", "Storage", "Server"],
+            answer: "Design"
+        },
+        {
+            question: "JavaScript works on?",
+            options: ["Frontend", "Backend", "Both", "None"],
+            answer: "Both"
+        },
+        {
+            question: "Which is database?",
+            options: ["MySQL", "HTML", "CSS", "JS"],
+            answer: "MySQL"
+        }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadQuestion() {
+        document.getElementById("result").innerText = "";
+        let q = quizData[current];
+        document.getElementById("question").innerText = q.question;
+
+        let options = document.getElementsByClassName("option");
+        for (let i = 0; i < options.length; i++) {
+            options[i].innerText = q.options[i];
+        }
+    }
+
+    function checkAnswer(btn) {
+        let selected = btn.innerText;
+        let correct = quizData[current].answer;
+
+        if (selected === correct) {
+            document.getElementById("result").innerText = "Correct ✅";
+            score++;
+        } else {
+            document.getElementById("result").innerText = "Wrong ❌";
+        }
+    }
+
+    function nextQuestion() {
+        current++;
+
+        if (current < quizData.length) {
+            loadQuestion();
+        } else {
+            document.querySelector(".container").innerHTML =
+                "<h2>Quiz Finished</h2>" +
+                "<p>Your Score: " + score + "/" + quizData.length + "</p>";
+        }
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
